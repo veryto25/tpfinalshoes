@@ -21,6 +21,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Allura&family=Bebas+Neue&family=Hind:wght@300&family=Italianno&family=Montserrat:wght@300&family=Poppins:wght@100&display=swap"
         rel="stylesheet">
+        
 </head>
 
 <body>
@@ -59,19 +60,19 @@
             
                 <!-- Al subir al servidor, deberá utilizarse la siguiente ruta. USUARIO debe ser reemplazado por el nombre de usuario de Pythonanywhere -->
                 <img v-if="image_url && !imageSeleccionada"
-                    :src="'https://www.pythonanywhere.com/user/vepersanoaxion/files/home/vepersanoaxion/mysite/static/imagenes/' + imagen_url"
+                    :src="'https://www.pythonanywhere.com/user/vepersanoaxion/files/home/vepersanoaxion/mysite/static/imagenes/' + image_url"
                     alt="Image del producto" style="max-width: 200px;">
                 
 
                 <!-- Vista previa de la nueva imagen seleccionada -->
-                <img v-if="imagen1Seleccionada" :src="image" alt="Vista previa de la nueva imagen"
+                <img v-if="imageSeleccionada" :src="image" alt="Vista previa de la nueva imagen"
                     style="max-width: 200px;">
 
                 
 
                 <!-- Input para nueva imagen -->
-                <label for="nuevaImagen1">Nueva Imagen1:</label>
-                <input type="file" id="nuevaImagen1" @change="seleccionarImagen1"><br>
+                <label for="nuevaImage">Nueva Imagen1:</label>
+                <input type="file" id="nuevaImage" @change="seleccionarImage"><br>
 
             
 
