@@ -69,16 +69,16 @@
                 // Iteramos sobre cada producto y agregamos filas a la tabla
                 for (let shoe of data) {
                     let fila = document.createElement('tr'); //Crea una nueva fila de tabla (<tr>) para cada producto.
-                    fila.innerHTML = '<td>' + shoe.id + '</td>' +
-                        '<td>' + shoe.modelo + '</td>' +
-                        '<td>' + shoe.creador + '</td>' +
-                        '<td align="right">' + shoe.precio + '</td>' +
-                        '<td align="right">' + shoe.cantidad + '</td>' +
-                        '<td align="right">' + shoe.descripcion + '</td>' +
+                    fila.innerHTML = '<td align="center">' + shoe.id + '</td>' +
+                        '<td align="center">' + shoe.modelo + '</td>' +
+                        '<td align="center">' + shoe.creador + '</td>' +
+                        '<td align="center">' + shoe.precio + '</td>' +
+                        '<td align="center">' + shoe.cantidad + '</td>' +
+                        '<td align="center">' + shoe.descripcion + '</td>' +
                         // Mostrar miniatura de la imagen
                         
                       
-                        '<td><img src= http://127.0.0.1:3000/uploads' + shoe.image +  ' alt="Imagen del producto" Content-Type="file" style="width: 100px;"></td>';
+                        '<td align="center"><img src= http://127.0.0.1:3000/shoes/image/' + shoe.image.replace('uploads\\', '') +  ' alt="Imagen del producto" style="width: 100px;"></td>';
 
 
 

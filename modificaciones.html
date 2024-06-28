@@ -54,32 +54,26 @@
                 <label for="cantidadModificar">Cantidad:</label>
                 <input type="number" id="cantidadModificar" title="cantidadModificar"
                     placeholder="ingrese nueva cantidad" v-model="cantidad" required><br>
+
+                <label for="descripcionModificar">Descripción:</label>
+                <input type="text" id="descripcionModificar" v-model="descripcion" title="descripcionModificar"
+                    placeholder="Ingrese una nueva descripcion" required><br>
                 <!-- Imagen actual del producto  -->
 
-                <img v-if="image && !imageSeleccionada" :src="'http://127.0.0.1:3000/uploads' + image"
+                <img v-if="image && !imageSeleccionada" :src="'http://127.0.0.1:3000/shoes/' + image"
                     alt="Image del producto" style="max-width: 200px;">
-
 
                 <!-- Al subir al servidor, deberá utilizarse la siguiente ruta. USUARIO debe ser reemplazado por el nombre de usuario de Pythonanywhere -->
-                <img v-if="image && !imageSeleccionada" :src="'http://127.0.0.1:3000/uploads' + image"
+                <img v-if="image && !imageSeleccionada" :src="'http://127.0.0.1:3000/shoes/' + image"
                     alt="Image del producto" style="max-width: 200px;">
-
 
                 <!-- Vista previa de la nueva imagen seleccionada -->
                 <img v-if="imageSeleccionada" :src="image" alt="Vista previa de la nueva imagen"
                     style="max-width: 200px;">
 
-
-
                 <!-- Input para nueva imagen -->
                 <label for="nuevaImage">Nueva Imagen:</label>
                 <input type="file" id="nuevaImage" @change="seleccionarImage"><br>
-
-
-
-                <label for="descripcionModificar">Descripción:</label>
-                <input type="text" id="descripcionModificar" v-model="descripcion" required><br>
-
 
                 <button class="menu" type="submit">Guardar Cambios</button>
                 <a class="menu" href="./modificaciones.html">Cancelar</a>
@@ -87,12 +81,11 @@
         </div>
     </div>
 
+
+
     <script src="https://unpkg.com/vue@3.4.31/dist/vue.global.prod.js"></script>
 
     <script>
-
-
-
         const URL = "http://127.0.0.1:3000/"
 
 
@@ -111,46 +104,37 @@
                     image: '',
                     imageSeleccionada: null,
                     imageUrlTemp: null,
-                    mostrarDatosShoe: true, //mostrarDatosProducto para controlar la visibilidad del formulario de modificación.
+                    mostrarDatosShoe: false, //mostrarDatosProducto para controlar la visibilidad del formulario de modificación.
                 };
             },
 
             methods: {
                 //Se ejecuta cuando se envía el formulario de consulta. En este método, utilizamos fetch para realizar una solicitud GET a la API y obtener los datos del producto correspondiente al código ingresado.
                 obtenerShoe() {
-
                     fetch(URL + 'shoes/' + this.id)
-                        //Realiza una solicitud de red al servidor para obtener los datos del producto. Usa la URL definida anteriormente y añade 'shoes/' seguido del código del producto.
-
-                        //Verificamos si la respuesta de la solicitud es exitosa (código de respuesta 200-299). 
-                        .then(response => {
+                    .then(response => {
                             //Si es así, utilizamos response.json() para parsear la respuesta en formato JSON.
                             if (response.ok) {
-                                return response.json() //Una vez que la respuesta llega del servidor, se convierte de formato JSON a un objeto JavaScript.
+                                response.json().then(data => this.establecerTabla(data)); //Una vez que la respuesta llega del servidor, se convierte de formato JSON a un objeto JavaScript.
                                 console.log("se ejecuto el json")
                             } else {
                                 //Si la respuesta es un error, lanzamos una excepción para ser "catcheada" más adelante en el catch.
                                 throw new Error('Error al obtener los datos del producto.')
                             }
-                        })
-
-                        //En este bloque, se asignan los datos obtenidos a las variables correspondientes de la aplicación Vue.
-                        .then(data => {
-                            this.modelo = data.modelo;
-                            this.creador = data.creador;
-                            this.cantidad = data.cantidad;
-                            this.precio = data.precio;
-                            this.descripcion = data.descripcion;
-                            this.image = data.image;
-
-
-                            this.mostrarDatosProducto = true;
-                        })
-
-                        //Si ocurre un error durante la solicitud, se captura y se imprime en la consola.
-                        .catch(error => {
+                    })
+                    .catch(error => {
                             alert('Código no encontrado.')
-                        })
+                    })
+                },
+
+                establecerTabla(data) {
+                    this.modelo = data.modelo;
+                    this.creador = data.creador;
+                    this.cantidad = data.cantidad;
+                    this.precio = data.precio;
+                    this.descripcion = data.descripcion;
+                    this.image = data.image;
+                    this.mostrarDatosShoe = true;
                 },
 
                 //Se activa cuando el usuario selecciona una imagen para cargar.
@@ -159,8 +143,6 @@
                     this.imageSeleccionada = file;
                     this.imageTemp = URL.createObjectURL(file); // Crea una URL temporal para la vista previa
                 },
-
-
 
                 //Se usa para enviar los datos modificados del producto al servidor.
                 guardarCambios() {
@@ -172,14 +154,10 @@
                     formData.append('precio', this.precio);
                     formData.append('descripcion', this.descripcion);
 
-
-
                     //Si se ha seleccionado una imagen nueva, la añade al formData. 
                     if (this.imageSeleccionada) {
                         formData.append('image', this.imageSeleccionada, this.imageSeleccionada.name);
                     }
-
-
 
                     //Utilizamos fetch para realizar una solicitud PUT a la API y guardar los cambios.
                     fetch(URL + 'shoes/' + this.id, {
