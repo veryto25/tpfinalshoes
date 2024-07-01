@@ -110,7 +110,7 @@
             methods: {
                 //Se ejecuta cuando se envía el formulario de consulta. En este método, utilizamos fetch para realizar una solicitud GET a la API y obtener los datos del producto correspondiente al código ingresado.
                 obtenerShoe() {
-                    fetch(URL + 'shoes/buscarZapato' + this.id)
+                    fetch(URL + 'shoes/buscarZapato/' + this.id)
                     .then(response => {
                             //Si es así, utilizamos response.json() para parsear la respuesta en formato JSON.
                             if (response.ok) {

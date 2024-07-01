@@ -2,8 +2,18 @@ const db = require('../db/db');
 const fs = require('fs'); // libreria para manejo de archivos
 const path = require('path'); // libreria para manejo de rutas
 
-const getAllShoes = (req, res) => {
-    const sql = 'SELECT * FROM shoes';
+const getAllShoes = (req, res) => {// se puede utlizar * para llamar a todo
+    const sql = `SELECT
+        sh.id as id,
+        sh.modelo as modelo, 
+        sh.precio as precio, 
+        sh.cantidad as cantidad, 
+        sh.image as image, 
+        sh.descripcion as descripcion, 
+        cr.creador as creador 
+        FROM shoes sh 
+        INNER JOIN creadores cr 
+        ON sh.creador = cr.id`;
     db.query(sql, (err, results) => {
         if (err) {
             console.error('Error al obtener zapatos:', err);
@@ -13,6 +23,18 @@ const getAllShoes = (req, res) => {
         res.json(results);
     });
 };
+
+// const getAllCreadores = (req, res) => {
+//     const sql = 'SELECT * FROM creadores ';
+//     db.query(sql, (err, results) => {
+//         if (err) {
+//             console.error('Error al obtener creadores:', err);
+//             res.status(500).json({ error: 'Error al obtener zapatos' });
+//             return;
+//         }
+//         res.json(results);
+//     });
+// };
 
 const getShoeImage = (req, res) => { // solucion problema imagen
     const imageId = req.params.id; // requerimos id de imagen
@@ -95,14 +117,34 @@ const updateShoe = (req, res) => {
 
 const deleteShoe = (req, res) => {
     const { id } = req.params;
-    const sql = 'DELETE FROM shoes WHERE id = ?';
-    db.query(sql, [id], (err, result) => {
+    sqlInsert = 'INSERT INTO shoesdelete SELECT * FROM shoes WHERE id = ?';
+    db.query(sqlInsert, [id], (err, results) => {
         if (err) {
-            console.error('Error al eliminar zapatos:', err);
-            res.status(500).json({ error: 'Error al eliminar zapatos' });
+            console.error('Error al insertar zapato:', err);
+            res.status(500).json({ error: 'Error al insertar zapato' });
             return;
         }
-        res.json({ message: 'Shoes deleted' });
+        sqlDelete = 'DELETE FROM shoes WHERE id = ?';
+        db.query(sqlDelete, [id], (err, results) => {
+            if (err) {
+                console.error('Error al eliminar zapato:', err);
+                res.status(500).json({ error: 'Error al eliminar zapato' });
+                return;
+            }
+            res.json({ message: 'Shoes deleted' });
+        })
+    })
+};
+
+const getDeletedShoes = (req, res) => {
+    const sql = 'SELECT * FROM shoesdelete as s INNER JOIN creadores as c ON s.creador = c.id';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error al obtener zapatos:', err);
+            res.status(500).json({ error: 'Error al obtener zapatos' });
+            return;
+        }
+        res.json(results);
     });
 };
 
@@ -112,5 +154,6 @@ module.exports = {
     createShoe,
     updateShoe,
     deleteShoe,
-    getShoeImage
+    getShoeImage,
+    getDeletedShoes
 };

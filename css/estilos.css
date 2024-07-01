@@ -129,6 +129,7 @@ video {
 
 
     display: flex;
+    flex-wrap: nowrap;
     background-color: black;
     opacity: 50%;
     color: antiquewhite;
@@ -149,6 +150,7 @@ video {
     font-weight: bolder;
 
     padding: 16px;
+ 
 
     text-decoration: none;
     text-align: center;
@@ -354,6 +356,7 @@ nav.acceder ul {
 }
 
 nav.acceder #login {
+    max-width: 50px;
     display: inline-block;
     font-size: 16px;
     padding: 5px;

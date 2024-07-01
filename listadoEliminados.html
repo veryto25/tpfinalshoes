@@ -22,10 +22,10 @@
 </head>
 
 <body>
-    <h1 class="titulo1">Listado de Productos</h1>
+    <h1 class="titulo1">Listado de Productos Eliminados</h1>
     <br><br><br>
     <div class="contenedor-centrado1">
-        <a class="menu" href="./menushoes.html">Menu principal</a>
+        <a class="menu" href="./menushoes.html">Menu productos</a>
     </div>
     <br><br>
     <table class="lista"> <!-- Se crea una tabla para mostrar los productos. -->
@@ -41,7 +41,7 @@
 
             </tr>
         </thead>
-        <tbody id="tablaShoes"> </tbody>
+        <tbody id="tabladeleteShoes"> </tbody>
     </table>
 
 
@@ -51,7 +51,7 @@
         const URL = "http://127.0.0.1:3000"
 
         // Realizamos la solicitud GET al servidor para obtener todos los productos.
-        fetch(URL + '/shoes')
+        fetch(URL + '/shoes/deleteshoes')
             .then(function (response) {
                 if (response.ok) {
                     //Si la respuesta es exitosa (response.ok), convierte el cuerpo de la respuesta de formato JSON a un objeto JavaScript y pasa estos datos a la siguiente promesa then.
@@ -64,27 +64,27 @@
 
             //Esta función maneja los datos convertidos del JSON.
             .then(function (data) {
-                let tablaShoes = document.getElementById('tablaShoes'); //Selecciona el elemento del DOM donde se mostrarán los productos.
+                let tablaShoes = document.getElementById('tabladeleteShoes'); //Selecciona el elemento del DOM donde se mostrarán los productos.
 
                 // Iteramos sobre cada producto y agregamos filas a la tabla
-                for (let shoe of data) {
+                for (let shoedelete of data) {
                     let fila = document.createElement('tr'); //Crea una nueva fila de tabla (<tr>) para cada producto.
-                    fila.innerHTML = '<td align="center">' + shoe.id + '</td>' +
-                        '<td align="center">' + shoe.modelo + '</td>' +
-                        '<td align="center">' + shoe.creador + '</td>' +
-                        '<td align="center">' + shoe.precio + '</td>' +
-                        '<td align="center">' + shoe.cantidad + '</td>' +
-                        '<td align="center">' + shoe.descripcion + '</td>' +
+                    fila.innerHTML = '<td align="center">' + shoedelete.id + '</td>' +
+                        '<td align="center">' + shoedelete.modelo + '</td>' +
+                        '<td align="center">' + shoedelete.creador + '</td>' +
+                        '<td align="center">' + shoedelete.precio + '</td>' +
+                        '<td align="center">' + shoedelete.cantidad + '</td>' +
+                        '<td align="center">' + shoedelete.descripcion + '</td>' +
                         // Mostrar miniatura de la imagen
                         
                       
-                        '<td align="center"><img src= http://127.0.0.1:3000/shoes/image/' + shoe.image.replace('uploads\\', '') +  ' alt="Imagen del producto" style="width: 100px;"></td>';
+                        '<td align="center"><img src= http://127.0.0.1:3000/shoes/image/' + shoedelete.image.replace('uploads\\', '') +  ' alt="Imagen del producto borrado" style="width: 100px;"></td>';
 
 
 
 
                     //Una vez que se crea la fila con el contenido del producto, se agrega a la tabla utilizando el método appendChild del elemento tablaProductos.
-                    tablaShoes.appendChild(fila);
+                    tabladeleteShoes.appendChild(fila);
                 }
             })
 
