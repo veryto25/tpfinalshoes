@@ -3,8 +3,9 @@ const fs = require('fs'); // libreria para manejo de archivos
 const path = require('path'); // libreria para manejo de rutas
 
 const getAllCreadores = (req, res) => {
-    const sql = `SELECT * FROM creadores cr 
+    const sql = `SELECT cr.id, cr.creador, cr.domicilio, cr.telefono, ps.pais FROM creadores cr 
     INNER JOIN paises ps ON cr.pais = ps.id`;
+
     db.query(sql, (err, results) => {
         if (err) {
             console.error('Error al obtener diseñador:', err);
@@ -81,15 +82,15 @@ const createCreador = (req, res) => {
 const updateCreador = (req, res) => {
     const { id } = req.params;
     const { creador, domicilio, telefono, pais } = req.body;
-    const image = req.file ? req.file.path : null; // Asegúrate de que la variable image esté definida
-    const sql = 'UPDATE creadores SET creador = ?, domicilio = ?, telefono = ?, pais = ?';
+    
+    const sql = 'UPDATE creadores SET creador = ?, domicilio = ?, telefono = ?, pais = ? WHERE id = ?';
     db.query(sql, [creador, domicilio, telefono, pais, id], (err, result) => {
         if (err) {
             console.error('Error al actualizar diseñador:', err);
             res.status(500).json({ error: 'Error al actualizar diseñador' });
             return;
         }
-        res.json({ message: 'Cradores updated' });
+        res.json({ message: 'Creadores updated' });
     });
 };
 
