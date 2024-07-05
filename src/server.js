@@ -5,7 +5,7 @@ const paisesRouter = require('../routes/paises')
 var bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
-import 'dotenv/config';
+
 
 //const whiteList = ['http://127.0.0.1:5500'] esto lo uso para el local host
 // Constante cors para abrir app desde otro puerto (5500)

@@ -13,7 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Allura&family=Bebas+Neue&family=Hind:wght@300&family=Italianno&family=Montserrat:wght@300&display=swap"
         rel="stylesheet">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -47,11 +47,9 @@
 
 
     <script>
-       //-------PUERTO LOCAL----------
-       // const URL = "http://127.0.0.1:3000"
+        //-------PUERTO LOCAL----------
+         const URL = "http://127.0.0.1:3000"
 
-         // ---------pUERTO CONEXION WEB
-        const URL = process.env.PORT || 3000;
 
         // Realizamos la solicitud GET al servidor para obtener todos los productos.
         fetch(URL + '/shoes')
@@ -79,9 +77,9 @@
                         '<td align="center">' + shoe.cantidad + '</td>' +
                         '<td align="center">' + shoe.descripcion + '</td>' +
                         // Mostrar miniatura de la imagen
-                        
-                      
-                        '<td align="center"><img src= http://127.0.0.1:3000/shoes/image/' + shoe.image.replace('uploads\\', '') +  ' alt="Imagen del producto" style="width: 100px;"></td>';
+
+
+                        '<td align="center"><img src= http://127.0.0.1:3000/shoes/image/' + shoe.image.replace('uploads\\', '') + ' alt="Imagen del producto" style="width: 100px;"></td>';
 
 
 

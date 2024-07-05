@@ -2,18 +2,12 @@
 const mysql = require('mysql2')
 
 const connection = mysql.createConnection({
-    //----------datos para utilizar aplicación en en webhost
-    host: process.env.MYSQL_ADDON_HOST,
-    user: process.env.MYSQL_ADDON_USER,
-    password: process.env.MYSQL_ADDON_PASSWORD,
-    database: process.env.MYSQL_ADDON_DB,
-    connectionLimit: 5
 
     // ---------datos para utilizar aplicación en localhost
-    // host: 'localhost',
-    // user: 'root',
-    // password: 'root',
-    // database: 'shoes_db'
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'shoes_db'
 })
 
 connection.connect((err) => {
