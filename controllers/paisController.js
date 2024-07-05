@@ -2,21 +2,20 @@ const db = require('../db/db');
 const fs = require('fs'); // libreria para manejo de archivos
 const path = require('path'); // libreria para manejo de rutas
 
-const getAllCreadores = (req, res) => {
-    const sql = `SELECT cr.id, cr.creador, cr.domicilio, cr.telefono, ps.pais FROM creadores cr 
-    INNER JOIN paises ps ON cr.pais = ps.id`;
+const getAllPaises = (req, res) => {
+    const sql = `SELECT ps.id, ps.pais, ps.idioma, ps.atel FROM paises ps`;
 
     db.query(sql, (err, results) => {
         if (err) {
-            console.error('Error al obtener diseñador:', err);
-            res.status(500).json({ error: 'Error al obtener diseñadores' });
+            console.error('Error al obtener pais:', err);
+            res.status(500).json({ error: 'Error al obtener pais' });
             return;
         }
         res.json(results);
     });
 };
 
-const getcreadorImage = (req, res) => { // solucion problema imagen
+const getpaisImage = (req, res) => { // solucion problema imagen
     const imageId = req.params.id; // requerimos id de imagen
     const parentDir = path.dirname(__dirname); // requerimos carpeta anterior a controller
     const imagePath = path.join(parentDir, '/uploads', imageId); // path de la imagen a buscar
@@ -48,13 +47,13 @@ const getcreadorImage = (req, res) => { // solucion problema imagen
     });
 };
 
-const getCreadorById = (req, res) => {
+const getPaisById = (req, res) => {
     const { id } = req.params;
-    const sql = 'SELECT * FROM creadores WHERE id = ?';
+    const sql = 'SELECT * FROM paises WHERE id = ?';
     db.query(sql, [id], (err, results) => {
         if (err) {
-            console.error('Error al obtener creadores:', err);
-            res.status(500).json({ error: 'Error al obtener creadores' });
+            console.error('Error al obtener paises:', err);
+            res.status(500).json({ error: 'Error al obtener paises' });
             return;
         }
         if(results.length == 0) {
@@ -65,55 +64,55 @@ const getCreadorById = (req, res) => {
     });
 };
 
-const createCreador = (req, res) => {
-    const { creador, domicilio, telefono, pais } = req.body;
+const createPais = (req, res) => {
+    const { pais, idioma, atel } = req.body;
    
-    const sql = 'INSERT INTO creadores ( creador, domicilio, telefono, pais) VALUES (? ,?, ?, ?)';
-    db.query(sql, [creador,domicilio, telefono, pais], (err, results) => {
+    const sql = 'INSERT INTO paises ( pais, idioma, atel) VALUES (? ,?, ?)';
+    db.query(sql, [pais,idioma, atel], (err, results) => {
         if (err) {
-            console.error('Error al crear diseñador:', err);
-            res.status(500).json({ error: 'Error al crear diseñador' });
+            console.error('Error al crear pais:', err);
+            res.status(500).json({ error: 'Error al crear pais' });
             return;
         }
-        res.json({ message: 'Creador created', craedorId: results.insertId });
+        res.json({ message: 'Pais created', paisId: results.insertId });
     });
 };
 
-const updateCreador = (req, res) => {
+const updatePais = (req, res) => {
     const { id } = req.params;
-    const { creador, domicilio, telefono, pais } = req.body;
+    const { pais, idioma, atel } = req.body;
     
-    const sql = 'UPDATE creadores SET creador = ?, domicilio = ?, telefono = ?, pais = ? WHERE id = ?';
-    db.query(sql, [creador, domicilio, telefono, pais, id], (err, result) => {
+    const sql = 'UPDATE paises SET pais = ?, idioma = ?, atel = ? WHERE id = ?';
+    db.query(sql, [pais, idioma, atel, id], (err, result) => {
         if (err) {
-            console.error('Error al actualizar diseñador:', err);
-            res.status(500).json({ error: 'Error al actualizar diseñador' });
+            console.error('Error al actualizar pais:', err);
+            res.status(500).json({ error: 'Error al actualizar pais' });
             return;
         }
-        res.json({ message: 'Creadores updated' });
+        res.json({ message: 'Paises updated' });
     });
 };
 
-const deleteCreador = (req, res) => {
+const deletePais = (req, res) => {
     const { id } = req.params;
-    const sql = 'DELETE FROM creadores WHERE id = ?';
+    const sql = 'DELETE FROM paises WHERE id = ?';
     db.query(sql, [id], (err, result) => {
         if (err) {
-            console.error('Error al eliminar diseñadores:', err);
-            res.status(500).json({ error: 'Error al eliminar diseñadores' });
+            console.error('Error al eliminar paises:', err);
+            res.status(500).json({ error: 'Error al eliminar paises' });
             return;
         }
-        res.json({ message: 'Creadores deleted' });
+        res.json({ message: 'Paises deleted' });
     });
 };
 
 module.exports = {
-    getAllCreadores,
-    getCreadorById,
-    createCreador,
-    updateCreador,
-    deleteCreador,
-    getcreadorImage
+    getAllPaises,
+    getPaisById,
+    createPais,
+    updatePais,
+    deletePais,
+    getpaisImage
   
   
 };

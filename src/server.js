@@ -1,6 +1,7 @@
 const express = require('express')
 const shoesRouter = require('../routes/shoes')
 const creadoresRouter = require('../routes/creadores')
+const paisesRouter = require('../routes/paises')
 var bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
@@ -20,6 +21,7 @@ app.use(bodyParser.json())
 
 app.use('/shoes', shoesRouter);
 app.use('/creadores',creadoresRouter);
+app.use('/paises',paisesRouter);
 
 const PORT = 3000
 app.listen(PORT, () => {

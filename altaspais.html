@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar producto</title>
+    <title>Agregar paises</title>
     <link rel="icon" href="./img/noviaicono.ico.ico">
     <link rel="stylesheet" href="./public/css/estilosmenu.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,26 +24,26 @@
 </head>
 
 <body>
-    <h1>Agregar Diseñador al listado</h1>
+    <h1>Agregar Pais al listado</h1>
    
 
     <!--enctype="multipart/form-data" es necesario para enviar archivos al back.-->
     <form id="formulario" enctype="multipart/form-data">
-        <label for="creador">Diseñador:</label>        
-        <input type="text" id="creador" name="creador" required><br>
-        <label for="domicilio">Domicilio:</label>
-        <input type="text" id="domicilio" name="domicilio" required><br>
 
-        <label for="telefono">Telefono:</label>
-        <input type="number" step="0.01" id="telefono" name="telefono" required><br>
+        <label for="pais">Pais:</label> 
+        <input type="text" id="pais" name="pais" required><br>
 
-        <label for="pais">Pais:</label>
-        <input type="number"  id="pais" name="pais" required><br>
+   
+        <label for="idioma">Idioma:</label>
+        <input type="text" id="idioma" name="idioma" required><br>
+
+        <label for="atel">Car.telefónica:</label>
+        <input type="number"  id="atel" name="atel" required><br>
 
         
   
-        <button type="submit" class="menu">Agregar Producto</button>
-        <a class="menu" href="/menudisen.html">Menu Design </a>
+        <button type="submit" class="menu">Agregar Pais</button>
+        <a class="menu" href="./menupaises.html">Menu Design </a>
     </form>
 
     <script>
@@ -59,14 +59,14 @@
             console.log("prueba")
 
             var formData = new URLSearchParams(); // sin imagen, cambiar formData() por URLSearchParams()
-            formData.append('creador', document.getElementById('creador').value);
-            formData.append('domicilio', document.getElementById('domicilio').value);
-            formData.append('telefono', document.getElementById('telefono').value);
             formData.append('pais', document.getElementById('pais').value);
+            formData.append('idioma', document.getElementById('idioma').value);
+            formData.append('atel', document.getElementById('atel').value);
+            
             
             
             // Realizamos la solicitud POST al servidor. El método POST se usa para enviar y crear nuevos datos en el servidor.
-            fetch(URL + 'creadores', {
+            fetch(URL + 'paises', {
                 method: 'POST',
                 body: formData // Aquí enviamos formData. Dado que formData puede contener archivos, no se utiliza JSON.
             })
@@ -79,28 +79,28 @@
                     } else {
                         // Si hubo un error, lanzar explícitamente una excepción
                         // para ser "catcheada" más adelante
-                        throw new Error('Error al agregar el producto.');
+                        throw new Error('Error al agregar el pais.');
                     }
                 })
 
                 //Respuesta OK, muestra una alerta informando que el producto se agregó correctamente y limpia los campos del formulario para que puedan ser utilizados para un nuevo producto.
                 .then(function (data) {
-                    alert('Diseñadores agregado correctamente.');
+                    alert('Pais agregado correctamente.');
                 })
 
                 // En caso de error, mostramos una alerta con un mensaje de error.
                 .catch(function (error) {
-                    alert('Error al agregar el diseñador.');
+                    alert('Error al agregar el pais.');
                 })
 
                 // Limpiar el formulario en ambos casos (éxito o error)
                 .finally(function () {
                     document.getElementById('id').value = "";
               
-                    document.getElementById('creador').value = "";
-                    document.getElementById('domicilio').value = "";
-                    document.getElementById('telefono').value = "";
                     document.getElementById('pais').value = "";
+                    document.getElementById('idioma').value = "";
+                    document.getElementById('atel').value = "";
+                   
                   
                    
                 });
