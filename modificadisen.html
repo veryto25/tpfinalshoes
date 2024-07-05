@@ -70,8 +70,12 @@
     <script src="https://unpkg.com/vue@3.4.31/dist/vue.global.prod.js"></script>
 
     <script>
-        const URL = "http://127.0.0.1:3000/"
 
+        //--------PUERTO  LOCAL---------
+       // const URL = "http://127.0.0.1:3000/"
+
+         // ---------pUERTO CONEXION WEB
+        const URL = process.env.PORT || 3000;
 
         //Vue.createApp para crear nuestra aplicación Vue.
         const app = Vue.createApp({

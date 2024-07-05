@@ -25,7 +25,7 @@
 
 <body>
     <h1>Agregar Productos al Inventario</h1>
-   
+
 
     <!--enctype="multipart/form-data" es necesario para enviar archivos al back.-->
     <form id="formulario" enctype="multipart/form-data">
@@ -42,14 +42,14 @@
         <input type="number" step="0.01" id="precio" name="precio" required><br>
 
         <label for="cantidad">Cantidad:</label>
-        <input type="number"  id="cantidad" name="cantidad" required><br>
+        <input type="number" id="cantidad" name="cantidad" required><br>
 
         <label for="descripcion"> Descripción:</label>
         <input type="text" id="descripcion" name="descripcion" required>
 
         <label for="image">Imagen del producto:</label>
         <input type="file" id="image" name="image">
-  
+
         <button type="submit" class="menu">Agregar Producto</button>
         <a class="menu" href="/menushoes.html">Menu productos</a>
     </form>
@@ -57,9 +57,12 @@
     <script>
         //const URL = "http://127.0.0.1:5000/"
 
-        //Al subir al servidor, deberá utilizarse la siguiente ruta. USUARIO debe ser reemplazado por el nombre de usuario de Pythonanywhere
-        const URL = "http://127.0.0.1:3000/"
         
+        // -----pUERTO LOCAL
+        //const URL = "http://127.0.0.1:3000/"
+
+        // ---------pUERTO CONEXION WEB
+        const URL = process.env.PORT || 3000;
 
         // Capturamos el evento de envío del formulario
         document.getElementById('formulario').addEventListener('submit', function (event) {
@@ -74,8 +77,8 @@
             formData.append('precio', document.getElementById('precio').value);
             formData.append('descripcion', document.getElementById('descripcion').value);
             formData.append('image', document.getElementById('image').files[0]);
-            
-            
+
+
             // Realizamos la solicitud POST al servidor. El método POST se usa para enviar y crear nuevos datos en el servidor.
             fetch(URL + 'shoes', {
                 method: 'POST',
@@ -84,9 +87,9 @@
 
                 //Después de realizar la solicitud POST, se utiliza el método then() para manejar la respuesta del servidor.
                 .then(function (response) {
-                    if (response.ok) { 
+                    if (response.ok) {
                         //Si la respuesta es exitosa, convierte los datos de la respuesta a formato JSON.
-                        return response.json(); 
+                        return response.json();
                     } else {
                         // Si hubo un error, lanzar explícitamente una excepción
                         // para ser "catcheada" más adelante
@@ -113,7 +116,7 @@
                     document.getElementById('cantidad').value = "";
                     document.getElementById('descripcion').value = "";
                     document.getElementById('image').value = "";
-                   
+
                 });
         })
     </script>

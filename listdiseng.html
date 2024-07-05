@@ -46,8 +46,12 @@
 
 
     <script>
-       
-        const URL = "http://127.0.0.1:3000"
+
+        // --------PUERTO LOCAL-------- 
+        //const URL = "http://127.0.0.1:3000"
+
+         // ---------pUERTO CONEXION WEB
+        const URL = process.env.PORT || 3000;
 
         // Realizamos la solicitud GET al servidor para obtener todos los productos.
         fetch(URL + '/creadores')
